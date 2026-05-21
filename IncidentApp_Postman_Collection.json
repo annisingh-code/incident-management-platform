@@ -1,0 +1,346 @@
+{
+  "info": {
+    "name": "IncidentApp API Documentation",
+    "description": "Complete Postman collection for the Incident Management Application.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Authentication",
+      "item": [
+        {
+          "name": "Signup",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Test User\",\n  \"email\": \"test@example.com\",\n  \"password\": \"Password123\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/auth/signup",
+              "host": ["{{BASE_URL}}"],
+              "path": ["auth", "signup"]
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"Password123\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/auth/login",
+              "host": ["{{BASE_URL}}"],
+              "path": ["auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "Refresh Token",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/auth/refresh-token",
+              "host": ["{{BASE_URL}}"],
+              "path": ["auth", "refresh-token"]
+            },
+            "description": "Requires refreshToken cookie automatically set by Login."
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/auth/logout",
+              "host": ["{{BASE_URL}}"],
+              "path": ["auth", "logout"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Organizations",
+      "item": [
+        {
+          "name": "Create Organization",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{ACCESS_TOKEN}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Acme Corp\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/organizations",
+              "host": ["{{BASE_URL}}"],
+              "path": ["organizations"]
+            }
+          }
+        },
+        {
+          "name": "Switch Organization",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{ACCESS_TOKEN}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"organizationId\": \"64abcdef1234567890abcdef\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/organizations/switch",
+              "host": ["{{BASE_URL}}"],
+              "path": ["organizations", "switch"]
+            }
+          }
+        },
+        {
+          "name": "Invite User",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{ACCESS_TOKEN}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"colleague@example.com\",\n  \"role\": \"Developer\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/organizations/invite",
+              "host": ["{{BASE_URL}}"],
+              "path": ["organizations", "invite"]
+            },
+            "description": "Requires Admin or Manager role in the current organization."
+          }
+        },
+        {
+          "name": "Get Organization Users",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{ACCESS_TOKEN}}" }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/organizations/users",
+              "host": ["{{BASE_URL}}"],
+              "path": ["organizations", "users"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Incidents",
+      "item": [
+        {
+          "name": "Create Incident",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{ACCESS_TOKEN}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Database Timeout\",\n  \"description\": \"Production database is timing out on read queries.\",\n  \"severity\": \"Critical\",\n  \"status\": \"Open\",\n  \"tags\": [\"database\", \"production\"]\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/incidents",
+              "host": ["{{BASE_URL}}"],
+              "path": ["incidents"]
+            }
+          }
+        },
+        {
+          "name": "Get All Incidents",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{ACCESS_TOKEN}}" }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/incidents?page=1&limit=10&severity=Critical&status=Open&sortBy=createdAt&sortOrder=desc",
+              "host": ["{{BASE_URL}}"],
+              "path": ["incidents"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "10" },
+                { "key": "severity", "value": "Critical" },
+                { "key": "status", "value": "Open" },
+                { "key": "sortBy", "value": "createdAt" },
+                { "key": "sortOrder", "value": "desc" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Incident by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{ACCESS_TOKEN}}" }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/incidents/:id",
+              "host": ["{{BASE_URL}}"],
+              "path": ["incidents", ":id"],
+              "variable": [
+                { "key": "id", "value": "64abcdef1234567890abcdef" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Incident",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{ACCESS_TOKEN}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"In Progress\",\n  \"severity\": \"Medium\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/incidents/:id",
+              "host": ["{{BASE_URL}}"],
+              "path": ["incidents", ":id"],
+              "variable": [
+                { "key": "id", "value": "64abcdef1234567890abcdef" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Incident",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{ACCESS_TOKEN}}" }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/incidents/:id",
+              "host": ["{{BASE_URL}}"],
+              "path": ["incidents", ":id"],
+              "variable": [
+                { "key": "id", "value": "64abcdef1234567890abcdef" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Incident Activities",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{ACCESS_TOKEN}}" }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/incidents/:id/activities",
+              "host": ["{{BASE_URL}}"],
+              "path": ["incidents", ":id", "activities"],
+              "variable": [
+                { "key": "id", "value": "64abcdef1234567890abcdef" }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Comments",
+      "item": [
+        {
+          "name": "Add Comment",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{ACCESS_TOKEN}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"incidentId\": \"64abcdef1234567890abcdef\",\n  \"message\": \"Looking into this now, @colleague@example.com!\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/comments",
+              "host": ["{{BASE_URL}}"],
+              "path": ["comments"]
+            }
+          }
+        },
+        {
+          "name": "Get Comments",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{ACCESS_TOKEN}}" }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/comments?incidentId=64abcdef1234567890abcdef&page=1&limit=10",
+              "host": ["{{BASE_URL}}"],
+              "path": ["comments"],
+              "query": [
+                { "key": "incidentId", "value": "64abcdef1234567890abcdef" },
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "10" }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. Dashboard",
+      "item": [
+        {
+          "name": "Get Dashboard Metrics",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{ACCESS_TOKEN}}" }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/dashboard/metrics",
+              "host": ["{{BASE_URL}}"],
+              "path": ["dashboard", "metrics"]
+            },
+            "description": "Returns aggregation data for open/closed incidents, severity breakdown, and most active users."
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "BASE_URL",
+      "value": "http://localhost:5000/api/v1",
+      "type": "string"
+    },
+    {
+      "key": "ACCESS_TOKEN",
+      "value": "your_jwt_access_token_here",
+      "type": "string"
+    }
+  ]
+}
