@@ -10,7 +10,7 @@ export const useSocket = () => {
   useEffect(() => {
     // Connect if authenticated and we have a token
     if (isAuthenticated && accessToken) {
-      const newSocket = io(import.meta.env.VITE_API_URL?.replace('/api/v1', '') || 'http://localhost:5000', {
+      const newSocket = io(import.meta.env.VITE_API_URL?.trim().replace('/api/v1', '') || 'http://localhost:5000', {
         auth: { token: accessToken }
       });
 

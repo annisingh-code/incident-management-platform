@@ -62,7 +62,7 @@ const CreateEditIncident = () => {
     };
     
     if (assignee) payload.assignee = assignee;
-    if (dueDate) payload.dueDate = dueDate;
+    if (dueDate) payload.dueDate = new Date(dueDate).toISOString();
 
     try {
       if (isEditing) {
