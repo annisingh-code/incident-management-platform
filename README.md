@@ -2,6 +2,10 @@
 
 A full-stack, real-time Incident Management platform built for teams. This application allows organizations to report, track, and resolve incidents with real-time WebSocket collaboration, strict Role-Based Access Control (RBAC), and multi-tenant data isolation.
 
+### 🌐 Live Demo
+- **Frontend (Vercel):** [https://incident-management-platform-khaki.vercel.app](https://incident-management-platform-khaki.vercel.app)
+- **Backend API (Render):** [https://incident-management-platform.onrender.com](https://incident-management-platform.onrender.com)
+
 ## 🚀 Tech Stack
 
 ### Backend
