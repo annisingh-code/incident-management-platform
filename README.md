@@ -96,17 +96,21 @@ Due to the time constraints of this assignment, the following pragmatic tradeoff
 │   │   ├── store/             # Redux slices (Auth state)
 │   │   └── App.tsx            # React Router configuration
 │
-├── src/                       # Express + Node Backend
-│   ├── middleware/            # Auth, RBAC, Validation, Rate Limiting
-│   ├── modules/               # Domain-driven backend modules
-│   │   ├── auth/              # JWT, Login, Signup
-│   │   ├── comment/           # Comment models, Mentions parsing
-│   │   ├── dashboard/         # MongoDB Aggregation pipelines
-│   │   ├── incident/          # CRUD, Activity Timeline logging
-│   │   └── organization/      # Multi-tenancy, Invites
-│   ├── utils/                 # Socket instance, Error classes
-│   ├── app.ts                 # Express config & middleware setup
-│   └── server.ts              # DB connection & Server boot
+├── backend/                   # Express + Node Backend
+│   ├── src/
+│   │   ├── middleware/        # Auth, RBAC, Validation, Rate Limiting
+│   │   ├── modules/           # Domain-driven backend modules
+│   │   │   ├── auth/          # JWT, Login, Signup
+│   │   │   ├── comment/       # Comment models, Mentions parsing
+│   │   │   ├── dashboard/     # MongoDB Aggregation pipelines
+│   │   │   ├── incident/      # CRUD, Activity Timeline logging
+│   │   │   └── organization/  # Multi-tenancy, Invites
+│   │   ├── utils/             # Socket instance, Error classes
+│   │   ├── app.ts             # Express config & middleware setup
+│   │   └── server.ts          # DB connection & Server boot
+│
+├── .env.example               # Template for environment variables
+└── IncidentApp_Postman_Collection.json # API Documentation
 ```
 
 ---
@@ -139,6 +143,7 @@ Ensure you have MongoDB running locally on `mongodb://localhost:27017`.
 ### 2. Boot the Backend
 Open a terminal in the root folder:
 ```bash
+cd backend
 npm install
 npm run dev
 ```
